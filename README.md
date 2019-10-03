@@ -1,5 +1,6 @@
 # Api Key Service
-This Micro-Service is an enabling system responsibles to manage and provide api keys used by external applications.
+This Micro-Service is an enabling system responsible to manage and provide api keys used by external applications.
+
 
 ## Interface Documentation
 API Interface is described using Swagger. Which is available online: 
@@ -36,3 +37,6 @@ This is a simple and basic implementation for this assigment.
 We use an active boolean to deny access to an application/key and rely on service consumer to 
 check if the key is active and flush its cached key periodically so that we can deny access in production.
 A better implementation would be using a Pub/Sub and sent and event that Consumer Service will listen to.
+
+## Use of postgresql
+To get those extra points has described within the assigment
