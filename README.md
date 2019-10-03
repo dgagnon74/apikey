@@ -1,34 +1,38 @@
-# Geolocalization Service
-This Micro-Service is an enabling system responsible to manage and provide.
+# Api Key Service
+This Micro-Service is an enabling system responsibles to manage and provide api keys used by external applications.
 
-# Interface Documentation
-Interface is described using Swagger. Note that the Swagger file is used to generate the data model and has an input 
-for the corresponding API Gateway (enabling Authentication & QoS support).
+## Interface Documentation
+API Interface is described using Swagger. Which is available online: 
+- Swagger console is available at http://localhost:8081/swagger-ui.html
+- Swagger File is available at http://localhost:8081/v2/api-docs
 
-http://localhost:8080/swagger-ui.html
+Note: Does not mean we want this in production ... but handy for development and testing in lower level environments  
 
-# Build
-mvnw clean install
+## Build Instruction
+Execute: _mvnw clean package_
 
-# Run
-mvnw clean install
+## Running the service locally
+Execute: `mvnw spring-boot:run`
 
+## Docker Image Instruction
+The Dockerfile is included within in the maven project so run:
+_docker build -t airgraft-assigment/api-access-service_ .
 
+## Use the service
+Please refer to swagger for detail about documentation but has examples 
+- you can create a key using curl:
+_curl -d '{"clientId":"abc"}' -H "Content-Type: application/json" -X POST http://localhost:8081/api/key/v1_
+You will get the following JSON Response:
+{"keyId":"77e6010d-7a17-4b4f-8780-0acdab5233eb","active":true}
 
-# Use
-For example, for Montreal, Quebec, Canada latitude is 45.508888, and the longitude is -73.561668
-So using CURL
-curl --request GET "http://127.0.0.1:8080/api/localization/v1/timezones?latitude=45.508888&longitude=-73.561668"
-
-JSON returned:
-{"longitude":-73.561668,"latitude":45.508888,"timezoneId":"America/Toronto"}
+- Then you can get key detail using
+_curl -X GET http://localhost:8081/api/key/v1/77e6010d-7a17-4b4f-8780-0acdab5233eb_
+You will get the following JSON Response:
+{"keyId":"77e6010d-7a17-4b4f-8780-0acdab5233eb","active":true}
 
 # Development
-tradeoffs/decisions you made during development and their reasoning
-how to run your solution locally as a developer
-a suggestion how your solution could be deployed in production from a devops perspective
-v
-
-
-http://api.domain.tld/time_zone?lat=48.8567&lng=2.348692&api_key=CONSUMER_API_KEY
-# apikey
+## tradeoffs/decisions I made during development and their reasoning
+This is a simple and basic implementation for this assigment. 
+We use an active boolean to deny access to an application/key and rely on service consumer to 
+check if the key is active and flush its cached key periodically so that we can deny access in production.
+A better implementation would be using a Pub/Sub and sent and event that Consumer Service will listen to.
