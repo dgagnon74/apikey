@@ -31,7 +31,7 @@ _curl -X GET http://localhost:8081/api/key/v1/77e6010d-7a17-4b4f-8780-0acdab5233
 You will get the following JSON Response:
 {"keyId":"77e6010d-7a17-4b4f-8780-0acdab5233eb","active":true}
 
-# tradeoffs/decisions I made during development and their reasoning
+# Tradeoffs/decisions I made during development and their reasoning
 This is a simple and basic implementation for this assigment. 
 We use an active boolean to deny access to an application/key and rely on service consumer to 
 check if the key is active and flush its cached key periodically so that we can deny access in production.
